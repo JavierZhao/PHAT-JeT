@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PHAT-JeT — Patch Hierarchical Attention Transformer for Efficient Particle Jet Tagging</title>
+<meta name="description" content="PHAT-JeT keeps exact attention inside small particle patches and shares global context through patch tokens, leading trigger-scale jet taggers on four benchmarks. NeurIPS 2026.">
+<style>
+  :root{
+    --bg:#ffffff; --fg:#1a1c1f; --muted:#5c6370; --line:#e3e6ea;
+    --accent:#c25a12; --accent-soft:#fdf1e6; --card:#f7f8fa; --code:#f2f3f5;
+    --ours:#fff4ea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#111316; --fg:#e8eaed; --muted:#a0a6b0; --line:#2a2e34;
+           --accent:#f2a25c; --accent-soft:#2a1d12; --card:#181a1e; --code:#1c1f24;
+           --ours:#2a1d12; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);
+       font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+  .wrap{max-width:860px;margin:0 auto;padding:0 20px}
+  header{padding:56px 0 28px;text-align:center;border-bottom:1px solid var(--line)}
+  h1{font-size:32px;line-height:1.25;margin:0 0 6px;letter-spacing:-.01em}
+  h1 .sub{display:block;font-size:19px;font-weight:500;color:var(--muted);margin-top:10px}
+  .venue{display:inline-block;margin:16px 0 4px;padding:4px 12px;border-radius:999px;
+         background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:600}
+  .authors{margin:14px 0 4px;color:var(--fg);font-size:15px}
+  .affil{color:var(--muted);font-size:14px;margin:0}
+  .eq{font-size:13px}
+  .links{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:24px 0 4px}
+  .links a{display:inline-block;padding:9px 16px;border-radius:8px;border:1px solid var(--line);
+           background:var(--card);color:var(--fg);text-decoration:none;font-size:14px;font-weight:600}
+  .links a:hover{border-color:var(--accent);color:var(--accent)}
+  section{padding:34px 0;border-bottom:1px solid var(--line)}
+  h2{font-size:21px;margin:0 0 14px;letter-spacing:-.01em}
+  h3{font-size:16px;margin:22px 0 8px}
+  p{margin:0 0 14px}
+  .lead{font-size:17px}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:20px 0 4px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .stat b{display:block;font-size:24px;line-height:1.2}
+  .stat span{color:var(--muted);font-size:13px}
+  .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:14px}
+  table{border-collapse:collapse;width:100%;font-size:14px;min-width:520px}
+  th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:right}
+  th:first-child,td:first-child{text-align:left}
+  thead th{border-bottom:2px solid var(--line);font-size:13px;color:var(--muted);font-weight:600}
+  tr.ours td{background:var(--ours);font-weight:600}
+  tr.ref td{color:var(--muted);font-style:italic}
+  caption{caption-side:bottom;color:var(--muted);font-size:13px;padding-top:10px;text-align:left}
+  ol,ul{margin:0 0 14px;padding-left:22px}
+  li{margin:6px 0}
+  pre{background:var(--code);border:1px solid var(--line);border-radius:10px;padding:14px;
+      overflow-x:auto;font-size:13px;line-height:1.5}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  footer{padding:28px 0 60px;color:var(--muted);font-size:14px;text-align:center}
+  a{color:var(--accent)}
+  .note{background:var(--card);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;
+        padding:12px 16px;color:var(--muted);font-size:14px;margin:16px 0}
+  /* figures are drawn on white, so keep them on a white plate in dark mode too */
+  figure{margin:20px 0}
+  figure .plate{background:#ffffff;border:1px solid var(--line);border-radius:10px;padding:14px}
+  figure img{display:block;width:100%;height:auto}
+  figcaption{color:var(--muted);font-size:13px;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="venue">NeurIPS 2026</div>
+  <h1>PHAT-JeT
+    <span class="sub">Patch Hierarchical Attention Transformer for Efficient Particle Jet Tagging</span>
+  </h1>
+  <p class="authors">
+    Aaron Wang<sup>1*</sup> · Zihan Zhao<sup>2*</sup> · Alan Xia<sup>2*</sup> ·
+    Chang Sun<sup>3</sup> · Abhijith Gandrakota<sup>4</sup> · Jennifer Ngadiuba<sup>4</sup> ·
+    Richard Cavanaugh<sup>1</sup> · Javier Duarte<sup>2</sup>
+  </p>
+  <p class="affil">
+    <sup>1</sup>University of Illinois Chicago · <sup>2</sup>UC San Diego ·
+    <sup>3</sup>California Institute of Technology · <sup>4</sup>Fermi National Accelerator Laboratory
+    <br><span class="eq">* Equal contribution</span>
+  </p>
+  <div class="links">
+    <a href="https://arxiv.org/abs/2605.21789">Paper (arXiv)</a>
+    <a href="https://github.com/JavierZhao/PHAT-JeT">Code</a>
+    <a href="assets/PHATJET_NeurIPS2026_poster.pdf">Poster</a>
+    <a href="#results">Results</a>
+    <a href="#bibtex">BibTeX</a>
+  </div>
+</header>
+
+<section id="abstract">
+  <h2>Abstract</h2>
+  <p class="lead">Real-time jet tagging is critical for identifying short-lived particle decays in the
+  high-throughput detectors of the Large Hadron Collider, where trigger systems decide which collision events
+  to store under strict latency and accuracy constraints. Transformers achieve the highest jet tagging
+  accuracy when compute is unconstrained, but the quadratic cost of self-attention is too high for the
+  trigger budget. Existing efficient variants reduce this cost but lose classification performance.</p>
+  <p>We introduce the <strong>Patch Hierarchical Attention Transformer (PHAT-JeT)</strong>, which combines a
+  geometric message-passing (GMP) module that encodes local detector-plane structure with a patch-based
+  attention scheme that computes exact attention within small particle groups and shares global context
+  through patch tokens. At matched FLOPs in floating point, PHAT-JeT achieves the highest accuracy and
+  background rejection among the compared resource-constrained models on four benchmarks (hls4ml, JetClass,
+  Top Tagging, and Quark–Gluon). Hardware-adapted variants of its components meet a 100&nbsp;ns FPGA latency
+  target.</p>
+</section>
+
+<section id="highlights">
+  <h2>At a glance</h2>
+  <div class="stats">
+    <div class="stat"><b>81.80%</b><span>accuracy on hls4ml, best at trigger scale</span></div>
+    <div class="stat"><b>6.7K</b><span>parameters</span></div>
+    <div class="stat"><b>1.31M</b><span>FLOPs per jet</span></div>
+    <div class="stat"><b>4</b><span>jet benchmarks, best on all</span></div>
+    <div class="stat"><b>&lt; 100 ns</b><span>FPGA latency for hardware variants</span></div>
+  </div>
+  <h3>What makes PHAT-JeT different</h3>
+  <ul>
+    <li><strong>Exact attention, just not everywhere.</strong> Low-rank, linear and hashing schemes approximate
+    or drop particle–particle interactions. PHAT-JeT keeps them exact inside small patches, at
+    <em>O(N·P)</em> cost.</li>
+    <li><strong>Global context through patch tokens.</strong> Each patch is pooled into a token; tokens attend to
+    each other and broadcast back, so information still flows across the whole jet.</li>
+    <li><strong>Geometry from a cheap convolution.</strong> Geometric message passing bins particles onto a
+    coarse (η, φ) grid and applies a depthwise 2D convolution, encoding multi-prong structure.</li>
+    <li><strong>Any consistent ordering works.</strong> k<sub>T</sub>, p<sub>T</sub>, Morton and random orderings
+    perform the same when training and test match, and detector inputs already arrive p<sub>T</sub>-sorted, so
+    no real-time sorting is needed.</li>
+  </ul>
+</section>
+
+<section id="method">
+  <h2>Method</h2>
+  <figure>
+    <div class="plate"><img src="assets/method_schematic.png" alt="(a) Geometric message passing on an (η, φ) grid; (b) exact local attention within patches and global attention across patch tokens"></div>
+    <figcaption>(a) GMP discretizes the (η, φ) plane and mixes nearby cells, capturing multi-prong substructure.
+    (b) Exact local attention within patches, with lightweight global interaction through patch tokens.</figcaption>
+  </figure>
+  <ol>
+    <li><strong>Geometric message passing.</strong> Quantize each particle to a grid of spacing δ, sum features
+    per cell, apply a depthwise 2D convolution, sample the result back at each particle, and add it
+    residually.</li>
+    <li><strong>Local patch attention.</strong> Partition N particles into ⌈N/P⌉ patches of size P and run
+    standard multi-head attention inside each. With P&nbsp;=&nbsp;10 on hls4ml this gives 15 patches and roughly
+    10% of a full Transformer's attention computations.</li>
+    <li><strong>Hierarchical patch-level attention.</strong> Mean-pool each patch into a token, apply
+    multi-head attention across the N/P tokens, and broadcast the updated tokens back to their particles.</li>
+  </ol>
+  <figure>
+    <div class="plate"><img src="assets/architecture.png" alt="PHAT block detail and the full pipeline: input, GMP module, PHAT block, global pool, MLP"></div>
+    <figcaption>The PHAT block (left) and the full pipeline (right). GMP runs before the attention block.</figcaption>
+  </figure>
+  <p>Restricting exact attention to patches does not cost accuracy: patch attention without GMP already beats
+  a full O(N²) Transformer, 81.51% vs. 81.27%, at roughly half the FLOPs.</p>
+</section>
+
+<section id="results">
+  <h2>Results</h2>
+  <div class="scroll">
+  <table>
+    <caption>hls4ml jet-tagging benchmark (5 classes). Background rejection is 1 / false-positive rate at 80%
+    signal efficiency, averaged over classes; higher is better. All resource-constrained models use a single
+    attention (or equivalent) layer with FLOPs matched to PHAT-JeT. ParT is the unconstrained reference.</caption>
+    <thead>
+      <tr><th>Model</th><th>Acc (%)</th><th>ROC AUC</th><th>Avg bkg rej</th><th>Params (K)</th><th>FLOPs (M)</th></tr>
+    </thead>
+    <tbody>
+      <tr class="ours"><td>PHAT-JeT</td><td>81.80 ± 0.02</td><td>0.962</td><td>71.6 ± 0.6</td><td>6.7</td><td>1.31</td></tr>
+      <tr><td>JEDI-Linear</td><td>81.56 ± 0.05</td><td>0.961</td><td>68.7 ± 2.7</td><td>19.8</td><td>1.38</td></tr>
+      <tr><td>Transformer</td><td>81.27 ± 0.06</td><td>0.959</td><td>66.9 ± 0.6</td><td>4.6</td><td>2.48</td></tr>
+      <tr><td>SAL-T</td><td>81.28 ± 0.10</td><td>0.960</td><td>64.7 ± 0.5</td><td>5.1</td><td>1.26</td></tr>
+      <tr><td>Linformer</td><td>81.22 ± 0.07</td><td>0.960</td><td>65.0 ± 1.7</td><td>11.9</td><td>1.32</td></tr>
+      <tr><td>Point Transformer V3</td><td>80.93 ± 0.10</td><td>0.958</td><td>61.6 ± 0.6</td><td>22.4</td><td>1.24</td></tr>
+      <tr><td>PointNet</td><td>75.04 ± 0.06</td><td>0.934</td><td>17.0 ± 0.1</td><td>9.8</td><td>1.35</td></tr>
+      <tr><td>HEPT</td><td>74.10 ± 0.02</td><td>0.929</td><td>25.7 ± 0.3</td><td>8.5</td><td>1.17</td></tr>
+      <tr class="ref"><td>ParT (full, unconstrained)</td><td>82.10 ± 0.51</td><td>0.964</td><td>72.7 ± 1.0</td><td>2,127</td><td>313</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <h3>The headline finding</h3>
+  <p>At 1.31M FLOPs and 6.7K parameters, PHAT-JeT comes within 0.3 points of the full Particle Transformer,
+  which uses about 240× more FLOPs. Its improvement over JEDI-Linear, the strongest prior FPGA-deployable
+  baseline, is statistically significant in both accuracy and background rejection.</p>
+
+  <h3>Best on all four benchmarks</h3>
+  <figure>
+    <div class="plate"><img src="assets/bkgrej_chart.svg" alt="Average background rejection on hls4ml, JetClass, Top Tagging and Quark–Gluon; PHAT-JeT is highest on each"></div>
+    <figcaption>Average background rejection, all models at ~1–1.5M FLOPs; each panel has its own scale.
+    PTv3 is reported only on hls4ml and JetClass. JetClass models were trained on a 2M-jet subset.</figcaption>
+  </figure>
+
+  <h3>What each part buys</h3>
+  <div class="scroll">
+  <table>
+    <caption>Ablation on hls4ml. Relative gains are in average background rejection.</caption>
+    <thead><tr><th>Configuration</th><th>Acc (%)</th><th>Avg bkg rej</th><th>Gain</th></tr></thead>
+    <tbody>
+      <tr><td>Local patch attention only</td><td>81.23 ± 0.03</td><td>64.8 ± 0.7</td><td></td></tr>
+      <tr><td>+ global patch tokens</td><td>81.51 ± 0.11</td><td>67.0 ± 1.5</td><td>+3.4%</td></tr>
+      <tr class="ours"><td>+ GMP (PHAT-JeT)</td><td>81.80 ± 0.02</td><td>71.6 ± 0.6</td><td>+6.9%</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="hardware">
+  <h2>Hardware feasibility</h2>
+  <p>FPGA estimates at the Level-1 operating point used by JEDI-Linear: a fully parallel AMD VU13P design at
+  300&nbsp;MHz, initiation interval 1, no DSPs or BRAMs, N&nbsp;=&nbsp;64 particles. LUTs are pre-route da4ml
+  estimates; latency is the critical path.</p>
+  <div class="scroll">
+  <table>
+    <caption>Selected rows; see the paper for all designs. All rows use p<sub>T</sub>-ordered inputs except
+    "PI" (permutation-invariant).</caption>
+    <thead><tr><th>Design</th><th>Acc (%)</th><th>Avg bkg rej</th><th>LUTs</th><th>Latency (ns)</th></tr></thead>
+    <tbody>
+      <tr><td>JEDI-Linear, official</td><td>80.94</td><td>66.0</td><td>69.9k</td><td>63.3</td></tr>
+      <tr><td>JEDI-Linear, official PI</td><td>81.81</td><td>80.4</td><td>158k</td><td>73.3</td></tr>
+      <tr><td>JEDI + GMP</td><td>82.08</td><td>84.8</td><td>144k</td><td>69.9</td></tr>
+      <tr><td>JEDI + GMP + patch tokens</td><td>81.93</td><td>84.0</td><td>208k</td><td>96.6</td></tr>
+      <tr><td>Patch attention (ReLU, parallel) + GMP</td><td>81.10</td><td>66.7</td><td>708k</td><td>99.9</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>Each PHAT-JeT component has a variant that meets the 100&nbsp;ns target on its own. These variants replace
+  softmax attention, whose normalization adds latency beyond this target; softmax designs may suit systems with
+  larger latency budgets.</p>
+</section>
+
+<section id="generality">
+  <h2>Beyond jets</h2>
+  <p>PHAT-JeT needs only a consistent ordering, not a spatial grid or a meaningful sequence. With a 3D voxel GMP
+  grid, the same block reaches <strong>82.29 ± 0.41%</strong> overall accuracy on ScanObjectNN PB_T50_RS (real
+  scanned objects) at 0.612M parameters, and 81.22 ± 0.16% at 0.157M. That is above PointNet++ and SimpleView
+  and below PointMLP-elite and PointNeXt-S.</p>
+  <div class="note">All jet benchmarks are simulated: deployment would need validation in control regions,
+  calibration, and systematic studies. Train/test ordering mismatch lowers performance, and the GMP grid must
+  be calibrated for each detector.</div>
+</section>
+
+<section id="code">
+  <h2>Code</h2>
+  <pre><code>git clone https://github.com/JavierZhao/PHAT-JeT.git</code></pre>
+</section>
+
+<section id="bibtex">
+  <h2>BibTeX</h2>
+<pre><code>@inproceedings{wang2026phatjet,
+  title     = {Patch Hierarchical Attention Transformer for Efficient Particle Jet Tagging},
+  author    = {Wang, Aaron and Zhao, Zihan and Xia, Alan and Sun, Chang and
+               Gandrakota, Abhijith and Ngadiuba, Jennifer and Cavanaugh, Richard and
+               Duarte, Javier},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2026},
+  eprint    = {2605.21789},
+  archivePrefix = {arXiv},
+  url       = {https://arxiv.org/abs/2605.21789}
+}</code></pre>
+</section>
+
+<footer>
+  <p>PHAT-JeT · NeurIPS 2026 · Code released under the MIT License</p>
+</footer>
+
+</div>
+</body>
+</html>

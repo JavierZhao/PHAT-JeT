@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1130 632" font-family="Helvetica Neue, Inter, Arial, sans-serif">
+<text x="0.0" y="38.0" font-size="36" font-weight="700" fill="#1a3a6c">hls4ml (5-class)</text>
+<line x1="200.0" x2="200.0" y1="52.0" y2="290.0" stroke="#999" stroke-width="2"/>
+<path d="M200.0,56.0 H449.0 Q454.0,56.0 454.0,61.0 V89.0 Q454.0,94.0 449.0,94.0 H200.0 Z" fill="#e07a1f"/>
+<text x="188.0" y="85.0" font-size="32" fill="#1f1f1f" text-anchor="end" font-weight="700">PHAT-JeT</text>
+<text x="462.0" y="85.0" font-size="31" fill="#1f1f1f" font-weight="700">71.6</text>
+<path d="M200.0,104.0 H438.7 Q443.7,104.0 443.7,109.0 V137.0 Q443.7,142.0 438.7,142.0 H200.0 Z" fill="#9fb3cf"/>
+<text x="188.0" y="133.0" font-size="32" fill="#1f1f1f" text-anchor="end">JEDI-Linear</text>
+<text x="451.7" y="133.0" font-size="31" fill="#1f1f1f">68.7</text>
+<path d="M200.0,152.0 H425.6 Q430.6,152.0 430.6,157.0 V185.0 Q430.6,190.0 425.6,190.0 H200.0 Z" fill="#9fb3cf"/>
+<text x="188.0" y="181.0" font-size="32" fill="#1f1f1f" text-anchor="end">Linformer</text>
+<text x="438.6" y="181.0" font-size="31" fill="#1f1f1f">65.0</text>
+<path d="M200.0,200.0 H424.5 Q429.5,200.0 429.5,205.0 V233.0 Q429.5,238.0 424.5,238.0 H200.0 Z" fill="#9fb3cf"/>
+<text x="188.0" y="229.0" font-size="32" fill="#1f1f1f" text-anchor="end">SAL-T</text>
+<text x="437.5" y="229.0" font-size="31" fill="#1f1f1f">64.7</text>
+<path d="M200.0,248.0 H413.5 Q418.5,248.0 418.5,253.0 V281.0 Q418.5,286.0 413.5,286.0 H200.0 Z" fill="#9fb3cf"/>
+<text x="188.0" y="277.0" font-size="32" fill="#1f1f1f" text-anchor="end">PTv3</text>
+<text x="426.5" y="277.0" font-size="31" fill="#1f1f1f">61.6</text>
+<text x="590.0" y="38.0" font-size="36" font-weight="700" fill="#1a3a6c">JetClass (10-class)</text>
+<line x1="790.0" x2="790.0" y1="52.0" y2="290.0" stroke="#999" stroke-width="2"/>
+<path d="M790.0,56.0 H1039.0 Q1044.0,56.0 1044.0,61.0 V89.0 Q1044.0,94.0 1039.0,94.0 H790.0 Z" fill="#e07a1f"/>
+<text x="778.0" y="85.0" font-size="32" fill="#1f1f1f" text-anchor="end" font-weight="700">PHAT-JeT</text>
+<text x="1052.0" y="85.0" font-size="31" fill="#1f1f1f" font-weight="700">43.94</text>
+<path d="M790.0,104.0 H1029.0 Q1034.0,104.0 1034.0,109.0 V137.0 Q1034.0,142.0 1029.0,142.0 H790.0 Z" fill="#9fb3cf"/>
+<text x="778.0" y="133.0" font-size="32" fill="#1f1f1f" text-anchor="end">PTv3</text>
+<text x="1042.0" y="133.0" font-size="31" fill="#1f1f1f">42.21</text>
+<path d="M790.0,152.0 H977.1 Q982.1,152.0 982.1,157.0 V185.0 Q982.1,190.0 977.1,190.0 H790.0 Z" fill="#9fb3cf"/>
+<text x="778.0" y="181.0" font-size="32" fill="#1f1f1f" text-anchor="end">Linformer</text>
+<text x="990.1" y="181.0" font-size="31" fill="#1f1f1f">33.24</text>
+<path d="M790.0,200.0 H968.7 Q973.7,200.0 973.7,205.0 V233.0 Q973.7,238.0 968.7,238.0 H790.0 Z" fill="#9fb3cf"/>
+<text x="778.0" y="229.0" font-size="32" fill="#1f1f1f" text-anchor="end">SAL-T</text>
+<text x="981.7" y="229.0" font-size="31" fill="#1f1f1f">31.78</text>
+<path d="M790.0,248.0 H911.8 Q916.8,248.0 916.8,253.0 V281.0 Q916.8,286.0 911.8,286.0 H790.0 Z" fill="#9fb3cf"/>
+<text x="778.0" y="277.0" font-size="32" fill="#1f1f1f" text-anchor="end">JEDI-Linear</text>
+<text x="924.8" y="277.0" font-size="31" fill="#1f1f1f">21.93</text>
+<text x="0.0" y="374.0" font-size="36" font-weight="700" fill="#1a3a6c">Top Tagging</text>
+<line x1="200.0" x2="200.0" y1="388.0" y2="578.0" stroke="#999" stroke-width="2"/>
+<path d="M200.0,392.0 H449.0 Q454.0,392.0 454.0,397.0 V425.0 Q454.0,430.0 449.0,430.0 H200.0 Z" fill="#e07a1f"/>
+<text x="188.0" y="421.0" font-size="32" fill="#1f1f1f" text-anchor="end" font-weight="700">PHAT-JeT</text>
+<text x="462.0" y="421.0" font-size="31" fill="#1f1f1f" font-weight="700">34.3</text>
+<path d="M200.0,440.0 H430.5 Q435.5,440.0 435.5,445.0 V473.0 Q435.5,478.0 430.5,478.0 H200.0 Z" fill="#9fb3cf"/>
+<text x="188.0" y="469.0" font-size="32" fill="#1f1f1f" text-anchor="end">SAL-T</text>
+<text x="443.5" y="469.0" font-size="31" fill="#1f1f1f">31.8</text>
+<path d="M200.0,488.0 H423.8 Q428.8,488.0 428.8,493.0 V521.0 Q428.8,526.0 423.8,526.0 H200.0 Z" fill="#9fb3cf"/>
+<text x="188.0" y="517.0" font-size="32" fill="#1f1f1f" text-anchor="end">Linformer</text>
+<text x="436.8" y="517.0" font-size="31" fill="#1f1f1f">30.9</text>
+<path d="M200.0,536.0 H363.8 Q368.8,536.0 368.8,541.0 V569.0 Q368.8,574.0 363.8,574.0 H200.0 Z" fill="#9fb3cf"/>
+<text x="188.0" y="565.0" font-size="32" fill="#1f1f1f" text-anchor="end">JEDI-Linear</text>
+<text x="376.8" y="565.0" font-size="31" fill="#1f1f1f">22.8</text>
+<text x="590.0" y="374.0" font-size="36" font-weight="700" fill="#1a3a6c">Quark–Gluon</text>
+<line x1="790.0" x2="790.0" y1="388.0" y2="578.0" stroke="#999" stroke-width="2"/>
+<path d="M790.0,392.0 H1039.0 Q1044.0,392.0 1044.0,397.0 V425.0 Q1044.0,430.0 1039.0,430.0 H790.0 Z" fill="#e07a1f"/>
+<text x="778.0" y="421.0" font-size="32" fill="#1f1f1f" text-anchor="end" font-weight="700">PHAT-JeT</text>
+<text x="1052.0" y="421.0" font-size="31" fill="#1f1f1f" font-weight="700">6.1</text>
+<path d="M790.0,440.0 H1026.5 Q1031.5,440.0 1031.5,445.0 V473.0 Q1031.5,478.0 1026.5,478.0 H790.0 Z" fill="#9fb3cf"/>
+<text x="778.0" y="469.0" font-size="32" fill="#1f1f1f" text-anchor="end">SAL-T</text>
+<text x="1039.5" y="469.0" font-size="31" fill="#1f1f1f">5.8</text>
+<path d="M790.0,488.0 H1026.5 Q1031.5,488.0 1031.5,493.0 V521.0 Q1031.5,526.0 1026.5,526.0 H790.0 Z" fill="#9fb3cf"/>
+<text x="778.0" y="517.0" font-size="32" fill="#1f1f1f" text-anchor="end">Linformer</text>
+<text x="1039.5" y="517.0" font-size="31" fill="#1f1f1f">5.8</text>
+<path d="M790.0,536.0 H1014.0 Q1019.0,536.0 1019.0,541.0 V569.0 Q1019.0,574.0 1014.0,574.0 H790.0 Z" fill="#9fb3cf"/>
+<text x="778.0" y="565.0" font-size="32" fill="#1f1f1f" text-anchor="end">JEDI-Linear</text>
+<text x="1027.0" y="565.0" font-size="31" fill="#1f1f1f">5.5</text>
+</svg>

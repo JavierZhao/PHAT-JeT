@@ -109,24 +109,24 @@
 </section>
 
 <section id="highlights">
-  <h2>At a glance</h2>
+  <h2>Key numbers</h2>
   <div class="stats">
     <div class="stat"><b>81.80%</b><span>accuracy on hls4ml, best at trigger scale</span></div>
     <div class="stat"><b>6.7K</b><span>parameters</span></div>
     <div class="stat"><b>1.31M</b><span>FLOPs per jet</span></div>
-    <div class="stat"><b>4</b><span>jet benchmarks, best on all</span></div>
+    <div class="stat"><b>4</b><span>jet benchmarks evaluated</span></div>
     <div class="stat"><b>&lt; 100 ns</b><span>FPGA latency for hardware variants</span></div>
   </div>
-  <h3>What makes PHAT-JeT different</h3>
+  <h3>Design</h3>
   <ul>
-    <li><strong>Exact attention, just not everywhere.</strong> Low-rank, linear and hashing schemes approximate
+    <li><strong>Exact attention within patches.</strong> Low-rank, linear and hashing schemes approximate
     or drop particle–particle interactions. PHAT-JeT keeps them exact inside small patches, at
     <em>O(N·P)</em> cost.</li>
-    <li><strong>Global context through patch tokens.</strong> Each patch is pooled into a token; tokens attend to
+    <li><strong>Patch tokens for global context.</strong> Each patch is pooled into a token; tokens attend to
     each other and broadcast back, so information still flows across the whole jet.</li>
-    <li><strong>Geometry from a cheap convolution.</strong> Geometric message passing bins particles onto a
+    <li><strong>Geometric message passing.</strong> GMP bins particles onto a
     coarse (η, φ) grid and applies a depthwise 2D convolution, encoding multi-prong structure.</li>
-    <li><strong>Any consistent ordering works.</strong> k<sub>T</sub>, p<sub>T</sub>, Morton and random orderings
+    <li><strong>Particle ordering.</strong> k<sub>T</sub>, p<sub>T</sub>, Morton and random orderings
     perform the same when training and test match, and detector inputs already arrive p<sub>T</sub>-sorted, so
     no real-time sorting is needed.</li>
   </ul>
@@ -153,8 +153,8 @@
     <div class="plate"><img src="assets/architecture.png" alt="PHAT block detail and the full pipeline: input, GMP module, PHAT block, global pool, MLP"></div>
     <figcaption>The PHAT block (left) and the full pipeline (right). GMP runs before the attention block.</figcaption>
   </figure>
-  <p>Restricting exact attention to patches does not cost accuracy: patch attention without GMP already beats
-  a full O(N²) Transformer, 81.51% vs. 81.27%, at roughly half the FLOPs.</p>
+  <p>Patch attention without GMP reaches 81.51% accuracy, compared with 81.27% for a full O(N²) Transformer,
+  at about half the FLOPs.</p>
 </section>
 
 <section id="results">
@@ -180,19 +180,19 @@
     </tbody>
   </table>
   </div>
-  <h3>The headline finding</h3>
+  <h3>Comparison with ParT and JEDI-Linear</h3>
   <p>At 1.31M FLOPs and 6.7K parameters, PHAT-JeT comes within 0.3 points of the full Particle Transformer,
   which uses about 240× more FLOPs. Its improvement over JEDI-Linear, the strongest prior FPGA-deployable
   baseline, is statistically significant in both accuracy and background rejection.</p>
 
-  <h3>Best on all four benchmarks</h3>
+  <h3>Background rejection by benchmark</h3>
   <figure>
     <div class="plate"><img src="assets/bkgrej_chart.svg" alt="Average background rejection on hls4ml, JetClass, Top Tagging and Quark–Gluon; PHAT-JeT is highest on each"></div>
     <figcaption>Average background rejection, all models at ~1–1.5M FLOPs; each panel has its own scale.
     PTv3 is reported only on hls4ml and JetClass. JetClass models were trained on a 2M-jet subset.</figcaption>
   </figure>
 
-  <h3>What each part buys</h3>
+  <h3>Ablation</h3>
   <div class="scroll">
   <table>
     <caption>Ablation on hls4ml. Relative gains are in average background rejection.</caption>
@@ -207,7 +207,7 @@
 </section>
 
 <section id="hardware">
-  <h2>Hardware feasibility</h2>
+  <h2>FPGA estimates</h2>
   <p>FPGA estimates at the Level-1 operating point used by JEDI-Linear: a fully parallel AMD VU13P design at
   300&nbsp;MHz, initiation interval 1, no DSPs or BRAMs, N&nbsp;=&nbsp;64 particles. LUTs are pre-route da4ml
   estimates; latency is the critical path.</p>
@@ -231,7 +231,7 @@
 </section>
 
 <section id="generality">
-  <h2>Beyond jets</h2>
+  <h2>ScanObjectNN and limitations</h2>
   <p>PHAT-JeT needs only a consistent ordering, not a spatial grid or a meaningful sequence. With a 3D voxel GMP
   grid, the same block reaches <strong>82.29 ± 0.41%</strong> overall accuracy on ScanObjectNN PB_T50_RS (real
   scanned objects) at 0.612M parameters, and 81.22 ± 0.16% at 0.157M. That is above PointNet++ and SimpleView
